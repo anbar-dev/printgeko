@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="product-links.js" defer></script>
+  <meta name="description" content="A short, practical shortlist of 3D printers for beginners, miniatures, multicolor printing, large projects, and functional parts.">
+  <title>PrintGeko — Find the right 3D printer faster</title>
+  <style>
+    :root {
+      --ink: #17231f;
+      --muted: #60716b;
+      --paper: #f8fbf7;
+      --panel: #ffffff;
+      --line: #dce8df;
+      --green: #1e6b4b;
+      --green-dark: #124a35;
+      --mint: #dff3e7;
+      --yellow: #ffd66b;
+      --shadow: 0 18px 48px rgba(24, 62, 45, .10);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      border-bottom: 1px solid rgba(220,232,223,.8);
+      background: rgba(248,251,247,.92);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+    }
+    .nav {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: -.05em;
+      font-size: 1.32rem;
+    }
+    .brand-mark {
+      width: 31px;
+      height: 31px;
+      border-radius: 9px 9px 12px 4px;
+      background: var(--green);
+      transform: rotate(-8deg);
+      position: relative;
+      box-shadow: 5px 5px 0 var(--yellow);
+    }
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      top: 7px;
+      left: 8px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 24px; font-size: .93rem; color: var(--muted); }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta { color: var(--green) !important; font-weight: 750; }
+
+    .hero { padding: 82px 0 64px; }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: 74px; }
+    .eyebrow, .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .72rem;
+      font-weight: 850;
+      color: var(--green);
+    }
+    .eyebrow::before { content: ""; width: 25px; height: 2px; background: var(--yellow); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 670px; margin-bottom: 22px; font-size: clamp(2.8rem, 6vw, 5.45rem); line-height: .98; letter-spacing: -.075em; }
+    .hero-copy { max-width: 580px; font-size: 1.15rem; color: var(--muted); }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 19px;
+      border: 0;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #fff; background: var(--green); box-shadow: 0 9px 20px rgba(30,107,75,.2); }
+    .button-primary:hover { background: var(--green-dark); }
+    .button-light { color: var(--green); background: var(--mint); }
+    .button-amazon { color: #1a251f; background: var(--yellow); box-shadow: 0 9px 20px rgba(239,184,45,.18); }
+    .button-amazon::after { content: "↗"; font-size: 1.1rem; }
+    .hero-note { margin-top: 18px; color: var(--muted); font-size: .84rem; }
+
+    .hero-card {
+      position: relative;
+      padding: 29px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .hero-card::before {
+      content: "TOP PICK FOR MOST BEGINNERS";
+      position: absolute;
+      top: -12px;
+      left: 25px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: var(--green-dark);
+      background: var(--yellow);
+      font-size: .65rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+    }
+    .product-visual {
+      min-height: 185px;
+      display: grid;
+      place-items: center;
+      border-radius: 19px;
+      background: linear-gradient(135deg, #e6f5e9, #f9f0ca);
+      margin-bottom: 23px;
+      overflow: hidden;
+      position: relative;
+    }
+    .product-visual::before, .product-visual::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.55); }
+    .product-visual::before { width: 170px; height: 170px; top: -70px; right: -38px; }
+    .product-visual::after { width: 110px; height: 110px; bottom: -65px; left: -35px; }
+    .printer-icon { width: 132px; height: 103px; border: 7px solid var(--green-dark); border-top-width: 12px; border-radius: 12px 12px 7px 7px; position: relative; z-index: 1; }
+    .printer-icon::before { content: ""; position: absolute; width: 50px; height: 30px; left: 34px; top: -47px; border: 7px solid var(--green-dark); border-bottom: 0; border-radius: 12px 12px 0 0; }
+    .printer-icon::after { content: ""; position: absolute; width: 64px; height: 17px; left: 27px; bottom: 16px; border-radius: 4px; background: var(--green); box-shadow: 0 -14px 0 -5px var(--green-dark); }
+    .product-card h3 { margin-bottom: 8px; font-size: 1.45rem; letter-spacing: -.04em; }
+    .product-image { display: block; width: 100%; height: 100%; min-height: 185px; object-fit: contain; padding: 16px; mix-blend-mode: multiply; }
+    .product-card p { color: var(--muted); margin-bottom: 20px; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 7px; margin: 16px 0 22px; }
+    .pill { padding: 5px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: .76rem; }
+
+    .section { padding: 65px 0; }
+    .section-tint { background: #eff8f1; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 27px; }
+    h2 { margin-bottom: 8px; font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.03; letter-spacing: -.065em; }
+    .section-intro { max-width: 570px; color: var(--muted); margin-bottom: 0; }
+    .intent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .intent-card {
+      min-height: 142px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--panel);
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .intent-card:hover { transform: translateY(-3px); border-color: #9ccaae; box-shadow: 0 10px 25px rgba(24,62,45,.08); }
+    .intent-icon { color: var(--green); font-size: 1.5rem; line-height: 1; }
+    .intent-card h3 { margin: 13px 0 4px; font-size: 1.04rem; letter-spacing: -.025em; }
+    .intent-card p { margin: 0; color: var(--muted); font-size: .88rem; }
+
+    .recommend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
+    .mini-card { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+    .mini-card .tag { margin-bottom: 14px; font-size: .64rem; }
+    .mini-card h3 { margin-bottom: 8px; font-size: 1.26rem; letter-spacing: -.04em; }
+    .mini-card p { min-height: 72px; margin-bottom: 18px; color: var(--muted); font-size: .91rem; }
+    .mini-card .button { width: 100%; }
+    .mini-card .product-visual { min-height: 110px; margin-bottom: 18px; }
+    .mini-card .printer-icon { transform: scale(.72); }
+
+    .method-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 65px; align-items: start; }
+    .method-list { display: grid; gap: 15px; }
+    .method-item { display: grid; grid-template-columns: 37px 1fr; gap: 14px; align-items: start; }
+    .method-number { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 50%; color: var(--green-dark); background: var(--yellow); font-weight: 900; }
+    .method-item h3 { margin-bottom: 2px; font-size: 1rem; }
+    .method-item p { margin: 0; color: var(--muted); font-size: .91rem; }
+    .quote-card { padding: 27px; border-radius: var(--radius); background: var(--green-dark); color: #e9f7ed; box-shadow: var(--shadow); }
+    .quote-card p { font-size: 1.2rem; line-height: 1.3; letter-spacing: -.025em; }
+    .quote-card small { color: #b5d9c4; }
+
+    .accessory-strip { display: flex; justify-content: space-between; align-items: center; gap: 25px; padding: 26px 30px; border-radius: var(--radius); background: var(--mint); }
+    .accessory-strip h2 { font-size: 1.75rem; }
+    .accessory-strip p { max-width: 610px; margin-bottom: 0; color: var(--muted); }
+    footer { padding: 32px 0 45px; border-top: 1px solid var(--line); color: var(--muted); font-size: .84rem; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .footer-links a { text-decoration: none; }
+    .footer-links a:hover { color: var(--green); }
+
+    @media (max-width: 850px) {
+      .hero { padding-top: 58px; }
+      .hero-grid, .method-grid { grid-template-columns: 1fr; gap: 38px; }
+      .hero-card { max-width: 590px; }
+      .intent-grid, .recommend-grid { grid-template-columns: repeat(2, 1fr); }
+      .method-grid { gap: 30px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      .nav { min-height: 64px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding: 52px 0 42px; }
+      h1 { font-size: clamp(2.7rem, 15vw, 4rem); }
+      .hero-copy { font-size: 1.04rem; }
+      .hero-actions .button { width: 100%; }
+      .section { padding: 48px 0; }
+      .section-heading { display: block; }
+      .section-intro { margin-top: 13px; }
+      .intent-grid, .recommend-grid { grid-template-columns: 1fr; }
+      .intent-card { min-height: 0; }
+      .accessory-strip, .footer-row { display: block; }
+      .accessory-strip .button { margin-top: 18px; width: 100%; }
+      .footer-links { margin-top: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="/" aria-label="PrintGeko home"><span class="brand-mark" aria-hidden="true"></span>PrintGeko</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#find-your-fit">3D Printers</a>
+        <a href="#accessories">Accessories</a>
+        <a class="nav-cta" href="#recommendations">See the picks →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">A shorter way to choose</span>
+          <h1>Need a 3D printer? I already narrowed it down.</h1>
+          <p class="hero-copy">Tell me what you want to print and I’ll point you to the best fit — without making you compare 40 models.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#find-your-fit">Choose by what you want to print <span aria-hidden="true">↓</span></a>
+            <a class="button button-light" href="#accessories">I already own a printer</a>
+          </div>
+          <p class="hero-note">Shortlists are researched for real buying decisions, with the main limitation shown before you click.</p>
+        </div>
+
+        <article class="hero-card product-card" id="top-pick">
+          <div class="product-visual"><img class="product-image" src="https://m.media-amazon.com/images/I/51D9zFABM3L._AC_SL1000_.jpg" alt="Bambu Lab A1 Mini 3D printer"></div>
+          <span class="tag">Best first printer</span>
+          <h3>Bambu Lab A1 Mini</h3>
+          <p>The easiest starting point if you want reliable PLA/PETG prints and don’t need a large build area.</p>
+          <div class="pill-row"><span class="pill">Easy setup</span><span class="pill">Auto calibration</span><span class="pill">Small footprint</span></div>
+          <a class="button button-amazon" href="https://www.amazon.com/dp/B0DMQKNPR8?tag=pgk87-20" target="_blank" rel="sponsored noopener">Check today’s Amazon price</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="find-your-fit">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><span class="eyebrow">Start with your use case</span><h2>What are you trying to print?</h2></div>
+          <p class="section-intro">One click takes you to a focused recommendation, not a giant product list.</p>
+        </div>
+        <div class="intent-grid">
+          <a class="intent-card" href="best-first-3d-printer.html"><span class="intent-icon">◎</span><h3>I’m a beginner</h3><p>The easiest first printer.</p></a>
+          <a class="intent-card" href="best-budget-3d-printer.html"><span class="intent-icon">$</span><h3>I have a small budget</h3><p>Best value without buying junk.</p></a>
+          <a class="intent-card" href="best-3d-printer-for-miniatures.html"><span class="intent-icon">✦</span><h3>I print miniatures</h3><p>Fine detail matters most.</p></a>
+          <a class="intent-card" href="best-multicolor-3d-printer.html"><span class="intent-icon">◈</span><h3>I want multiple colors</h3><p>Color without a complicated setup.</p></a>
+          <a class="intent-card" href="best-large-format-3d-printer.html"><span class="intent-icon">□</span><h3>I need large prints</h3><p>Cosplay, props and oversized parts.</p></a>
+          <a class="intent-card" href="best-3d-printer-for-functional-parts.html"><span class="intent-icon">⌁</span><h3>I need strong parts</h3><p>Functional prints and tougher materials.</p></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="recommendations">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><span class="eyebrow">Three places to start</span><h2>Good picks, clearly explained.</h2></div>
+          <p class="section-intro">The rest of the shortlist lives inside the use-case pages.</p>
+        </div>
+        <div class="recommend-grid">
+          <article class="mini-card">
+            <div class="product-visual"><img class="product-image" src="https://m.media-amazon.com/images/I/51D9zFABM3L._AC_SL1000_.jpg" alt="Bambu Lab A1 Mini 3D printer"></div>
+            <span class="tag">For beginners</span>
+            <h3>Bambu Lab A1 Mini</h3>
+            <p>Compact, highly automated and a low-friction way into FDM printing. Skip it if you need large parts.</p>
+            <a class="button button-amazon" href="https://www.amazon.com/dp/B0DMQKNPR8?tag=pgk87-20" target="_blank" rel="sponsored noopener">Check Amazon</a>
+          </article>
+          <article class="mini-card">
+            <div class="product-visual"><img class="product-image" src="https://m.media-amazon.com/images/I/71iC4BdehZL._AC_SL1500_.jpg" alt="ELEGOO Mars 5 Ultra resin 3D printer"></div>
+            <span class="tag">For miniatures</span>
+            <h3>ELEGOO Mars 5 Ultra</h3>
+            <p>Choose this when miniature detail matters more than a clean, simple workflow.</p>
+            <a class="button button-amazon" href="https://www.amazon.com/dp/B0D3TMS8DF?tag=pgk87-20" target="_blank" rel="sponsored noopener">Check Amazon</a>
+          </article>
+          <article class="mini-card">
+            <div class="product-visual"><img class="product-image" src="https://m.media-amazon.com/images/I/61ylStOupbL._AC_SL1500_.jpg" alt="QIDI Q2 enclosed 3D printer"></div>
+            <span class="tag">For strong parts</span>
+            <h3>QIDI Q2</h3>
+            <p>A more technical pick for enclosed printing, higher temperatures and engineering materials.</p>
+            <a class="button button-amazon" href="https://www.amazon.com/dp/B0FDWK8JD6?tag=pgk87-20" target="_blank" rel="sponsored noopener">Check Amazon</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint">
+      <div class="wrap method-grid">
+        <div>
+          <span class="eyebrow">The PrintGeko method</span>
+          <h2>Less browsing. Better fit.</h2>
+          <div class="method-list">
+            <div class="method-item"><span class="method-number">1</span><div><h3>Start with the job</h3><p>Miniatures, functional parts, color and large prints need different machines.</p></div></div>
+            <div class="method-item"><span class="method-number">2</span><div><h3>Show the trade-off</h3><p>Every pick has a “skip this if…” note so the recommendation stays honest.</p></div></div>
+            <div class="method-item"><span class="method-number">3</span><div><h3>Make the next click obvious</h3><p>One primary recommendation, one Amazon button, and only the alternative you actually need.</p></div></div>
+          </div>
+        </div>
+        <aside class="quote-card">
+          <p>“I researched the options so you can spend less time comparing specs and more time making things.”</p>
+          <small>PrintGeko editorial promise</small>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="accessories">
+      <div class="wrap">
+        <div class="accessory-strip">
+          <div><span class="eyebrow">Already have a printer?</span><h2>Find the stuff that keeps it running.</h2><p>Filament, drying, compatible hotends and resin wash-and-cure gear — organized by what you own.</p></div>
+          <a class="button button-primary" href="/3d-printer-maintenance/">See accessories →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div><strong>PrintGeko</strong><br><span>Shortlists for better 3D printing decisions.</span></div>
+      <div class="footer-links"><a href="/about/">About</a><a href="/affiliate-disclosure/">Affiliate disclosure</a><a href="/privacy/">Privacy</a></div>
+    </div>
+    <div class="wrap" style="margin-top:20px;">As an Amazon Associate I earn from qualifying purchases.</div>
+  </footer>
+</body>
+</html>
